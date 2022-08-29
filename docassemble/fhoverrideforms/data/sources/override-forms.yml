@@ -1,0 +1,8 @@
+# French system phrases from docassemble
+# Last updated on Aug 29, 2022
+# https://github.com/jhpyle/docassemble/blob/master/docassemble_base/docassemble/base/data/sources/fr-words.yml
+"fr":
+  "Sent": "Envoyé"
+  "Failure": "Échec"
+  "Failed to send": "Échec de l'envoi"
+  

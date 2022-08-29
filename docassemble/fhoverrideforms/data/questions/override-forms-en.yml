@@ -1,0 +1,83 @@
+default language: en
+---
+question: |
+  Here are your generated override forms!
+allow downloading: True
+zip filename: "Override Change Forms ${ broker_name }.zip"
+attachment code: attachment_list
+allow emailing: False
+include attachment notice: False
+include download tab: False
+field: should_send_to_carriers
+buttons:
+  - Send to Carriers
+---
+event: send_emails_event
+question: |
+  Email status
+subquestion: |
+  ${ email_sent_status_string }
+css: |
+  <style>
+    .email-success {
+       color: green;
+    }
+    .email-failure {
+       color: red;
+    }
+  </style>
+---
+question: Enter broker information
+fields:
+  - Broker Name: broker_name
+  - Corporation Name: corporation_name
+    required: False
+  - Old Life Rate: old_life_rate_answer
+    datatype: integer
+    min: 0
+    max: 200
+  - New Life Rate: life_rate_answer
+    datatype: integer
+    min: 0
+    max: 200
+  - Old Money Rate: old_money_rate_f
+    datatype: number
+    min: 0
+    max: 100
+  - New Money Rate: money_rate_f
+    datatype: number
+    min: 0
+    max: 100
+  - Broker Branch: broker_branch
+    choices:
+    - Barrie
+    - Burlington
+    - Calgary
+    - Edmonton
+    - Fredericton
+    - Halifax-Dartmouth
+    - Kingston
+    - Kitchener
+    - London
+    - Markham
+    - Moncton
+    - Ottawa
+    - Québec
+    - Richmond
+    - Saskatoon
+    - Sudbury
+    - Toronto
+    - Vancouver
+    - Victoria
+    - Winnipeg
+  - Carrier Table: carrier_table
+    input type: area
+    rows: 7
+    validate: validate_ws_carrier_table
+---
+question: "Select carrier codes"
+fields:
+  - Select codes: codes_mcq_answer
+    datatype: multiselect
+    code: codes_mcq_choices
+    rows: 18
