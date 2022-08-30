@@ -1,5 +1,0 @@
-include:
-  - override-forms-attachments.yml
-  - override-forms-en.yml
-  - override-forms-fr.yml
-  - override-forms-code.yml
