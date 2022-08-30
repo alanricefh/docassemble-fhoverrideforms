@@ -460,7 +460,7 @@ def validate_ws_carrier_table(input_string: str) -> bool:
 # Returns variables needed for the multiple choice question of selecting codes from a list
 def get_codes_mcq_variable(codes: List[Tuple[str, str, str, str]], ovr_change_type: Dict[str, bool]) -> List[List[any]]:
   # Create labels for all codes
-  choice_labels = [f'[{status}] [{code_type}] {carrier} - {code or "(No Code)"}' for (carrier, code_type, status, code) in codes]
+  choice_labels = [f'[{word(status)}] [{word(code_type)}] {word(carrier)} - {code or word("(No Code)")}' for (carrier, code_type, status, code) in codes]
   
   # Returns True for a code when the carrier should be notified of the override change
   def should_code_be_selected(code: Tuple[str, str, str, str]) -> bool:
