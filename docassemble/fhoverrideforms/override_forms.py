@@ -538,7 +538,7 @@ def send_carrier_emails(carriers_and_attachments: List[Tuple[str, DAFile]], code
   result = ''
   for carrier, is_ok in email_statuses:
     if is_ok:
-      result += f'<span class="email-success">[{word("Sent")}] {carrier} - {carrier_email_address}</span><br>'
+      result += f'<span class="email-success">[{word("Sent")}] {word(carrier)} - {carrier_email_address}</span><br>'
     else:
-      result += f'<span class="email-failure">[{word("Failure")}] {carrier} - {carrier_email_address} - {word("Failed to send")}</span><br>'
+      result += f'<span class="email-failure">[{word("Failure")}] {word(carrier)} - {carrier_email_address} - {word("Failed to send")}</span><br>'
   return result
