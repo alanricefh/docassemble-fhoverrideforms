@@ -3,3 +3,7 @@
   "Failure": "Échec"
   "Failed to send": "Échec de l'envoi"
   "Invalid WS Carrier table": "Table d'assureurs WS invalide"
+  "Active": "Actif"
+  "Pend-Brk": "En attente - Assureur"
+  "Personal": "Personnel"
+  "Corporate": "Corporatif"
