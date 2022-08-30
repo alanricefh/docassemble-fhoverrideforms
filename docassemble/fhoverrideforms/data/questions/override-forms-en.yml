@@ -27,7 +27,7 @@ css: |
     }
   </style>
 ---
-question: Enter broker information
+question: Broker information
 fields:
   - Broker Name: broker_name
   - Corporation Name: corporation_name

@@ -9,7 +9,7 @@ metadata:
 initial: True
 code: |
   set_language(user_language)
-  process_action()
+  # process_action()
   if should_send_to_carriers:
     send_emails_event
 ---
@@ -21,6 +21,8 @@ code: |
     user_language = url_args['lang']
   elif language_from_browser('en', 'fr'):
     user_language = language_from_browser('en', 'fr')
+  else:
+    user_language = 'en'
 ---
 code: |
   document_language = 'FR' if broker_branch == 'Québec' else 'EN'
@@ -61,8 +63,6 @@ code: |
   rounded_life_rate = round_to_interval(life_rate)
   rounded_old_life_rate = round_to_interval(old_life_rate)
   cl_annuity = canada_life_annuity(life_rate)
-  
-  log(f'life {life_rate} {old_life_rate}\nmoney {money_rate} {old_money_rate}', 'console')
 ---
 code: |
   codes_list = parse_ws_carrier_table(carrier_table)

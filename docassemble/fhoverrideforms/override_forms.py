@@ -437,7 +437,7 @@ def parse_ws_carrier_table(input_string: str) -> List[Tuple[str, str, str, str]]
         line_parts = [col.strip() for col in row.strip().split('\t')]
         if len(line_parts) < 6:
           # Invalid table
-          raise ValueError('Invalid WS carrier table, please copy entire table')
+          raise ValueError('Invalid WS carrier table')
         carrier_name_ws = line_parts[0]
         # Translate to English if code_type is in French
         code_type = CODE_TYPE_MAP.get(line_parts[1], line_parts[1])
@@ -453,8 +453,8 @@ def parse_ws_carrier_table(input_string: str) -> List[Tuple[str, str, str, str]]
 def validate_ws_carrier_table(input_string: str) -> bool:
   try:
     parse_ws_carrier_table(input_string)
-  except ValueError as e:
-    validation_error(e)
+  except ValueError:
+    validation_error(word('Invalid WS Carrier table'))
   return True
 
 # Returns variables needed for the multiple choice question of selecting codes from a list
