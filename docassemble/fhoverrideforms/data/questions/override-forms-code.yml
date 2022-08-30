@@ -1,15 +1,10 @@
 modules:
   - .override_forms
 ---
-metadata:
-  title: Override Form Generator
-  short title: Overrides
-  comment: This tool generates override forms.
----
 initial: True
 code: |
   set_language(user_language)
-  # process_action()
+  process_action()
   if should_send_to_carriers:
     send_emails_event
 ---

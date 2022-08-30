@@ -1,5 +1,10 @@
 default language: en
 ---
+metadata:
+  title: Override Form Generator
+  short title: Overrides
+  comment: This tool generates override forms.
+---
 question: |
   Here are your generated override forms!
 allow downloading: True
