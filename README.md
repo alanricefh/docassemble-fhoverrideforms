@@ -1,3 +1,3 @@
-# Financial Horizons Automation
+# Docassemble Override Forms
 
-Prototype for automating override forms.
+Automation script for creating override forms at Financial Horizons.

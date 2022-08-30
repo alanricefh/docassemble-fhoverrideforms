@@ -1,10 +1,5 @@
 default language: en
 ---
-metadata:
-  title: Override Form Generator
-  short title: Overrides
-  comment: This tool generates override forms.
----
 question: |
   Here are your generated override forms!
 allow downloading: True
@@ -13,9 +8,10 @@ attachment code: attachment_list
 allow emailing: False
 include attachment notice: False
 include download tab: False
-field: should_send_to_carriers
+field: attachment_screen_choice
 buttons:
-  - Send to Carriers
+  - Send to carriers: proceed
+  - Restart: restart
 ---
 event: send_emails_event
 question: |
@@ -31,6 +27,8 @@ css: |
        color: red;
     }
   </style>
+buttons:
+  - Restart: restart
 ---
 question: Broker information
 fields:

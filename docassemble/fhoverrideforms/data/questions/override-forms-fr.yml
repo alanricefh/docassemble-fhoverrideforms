@@ -1,11 +1,5 @@
 default language: fr
 ---
-metadata:
-  title: Générateur de formulaires boni
-  short title: Formulaires Boni
-  comment: Cet outil génère et envoie des formulaires boni.
----
-sets: attachments_screen
 question: |
   Voici vos formulaires boni!
 allow downloading: True
@@ -14,9 +8,10 @@ attachment code: attachment_list
 allow emailing: False
 include attachment notice: False
 include download tab: False
-field: should_send_to_carriers
+field: attachment_screen_choice
 buttons:
-  - Envoyer aux assureurs
+  - Envoyer aux assureurs: proceed
+  - Redémarrer: restart
 ---
 event: send_emails_event
 question: |
@@ -32,6 +27,8 @@ css: |
        color: red;
     }
   </style>
+buttons:
+  - Redémarrer: restart
 ---
 question: Renseignements du conseiller
 fields:

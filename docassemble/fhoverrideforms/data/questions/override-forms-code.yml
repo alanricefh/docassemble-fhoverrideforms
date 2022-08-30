@@ -1,11 +1,18 @@
 modules:
   - .override_forms
 ---
+metadata:
+  title: Override Form Generator
+  short title: Overrides
+  comment: This tool generates override forms.
+---
 initial: True
 code: |
   set_language(user_language)
   process_action()
-  if should_send_to_carriers:
+  if attachment_screen_choice == 'restart':
+    command('restart')
+  elif attachment_screen_choice == 'proceed':
     send_emails_event
 ---
 mandatory: True
@@ -48,8 +55,8 @@ code: |
 code: |
   old_money_rate = int(old_money_rate_f) if is_whole(old_money_rate_f) else old_money_rate_f
   money_rate = int(money_rate_f) if is_whole(money_rate_f) else money_rate_f
-  ia_25percent_rate = ia_money_product_rates(money_rate)[0]
-  ia_40percent_rate = ia_money_product_rates(money_rate)[1]
+  ia_25pct_rate = ia_money_product_rates(money_rate)[0]
+  ia_40pct_rate = ia_money_product_rates(money_rate)[1]
   cl_equity = canada_life_equity(money_rate)
   
   # If the user did not enter life_rate, it is assumed that it did not change from old_life_rate
@@ -58,6 +65,7 @@ code: |
   rounded_life_rate = round_to_interval(life_rate)
   rounded_old_life_rate = round_to_interval(old_life_rate)
   cl_annuity = canada_life_annuity(life_rate)
+
 ---
 code: |
   codes_list = parse_ws_carrier_table(carrier_table)

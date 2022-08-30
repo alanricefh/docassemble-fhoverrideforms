@@ -9,6 +9,8 @@ content: |
   
   Broker Name: ${ broker_name }  
   Broker Code: ${ carrier_email_code }
+  
+  Please confirm when you have proceeded with the change.
 
   Have a nice day!
 ---
@@ -16,12 +18,14 @@ template: ovr_change_carrier_template_FR
 subject: |
   Changement de taux bonification - ${ broker_name }
 content: |
-  Chèr ${ carrier_email_name },
+  Bonjour ${ carrier_email_name },
   
-  Veuillez trouver ci-joint le changement de taux bonification pour le conseiller suivant:
+  Vous trouverez ci-joint le changement de taux de bonification pour le conseiller suivant:
   
   Nom du conseiller: ${ broker_name }  
   Code du conseiller: ${ carrier_email_code }
+  
+  Veuillez nous confirmer lorsque vous aurez procédé au changement s.v.p.
 
   Bonne journée!
 ---
@@ -313,17 +317,42 @@ attachment:
     - "Other2": ${ corporation_name }
     - "Writing_2": ${ codes['IA'].get('Personal', '') }
     - "Other2_2": ${ codes['IA'].get('Corporate', '') }
-    - "undefined_2": ${ life_rate }
-    - "undefined_11": ${ ia_40percent_rate }
-    - "undefined_14": ${ ia_40percent_rate }
-    - "undefined_17": ${ ia_40percent_rate }
-    - "undefined_20": ${ ia_40percent_rate }
-    - "undefined_23": ${ ia_25percent_rate }
-    - "undefined_26": ${ ia_40percent_rate }
-    - "undefined_29": ${ ia_40percent_rate }
-    - "undefined_32": ${ ia_25percent_rate }
-    - "undefined_35": ${ ia_25percent_rate }
-    - "Date": ${ today_date }
+    # Personal row
+    - "undefined_2": ${ life_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_5": ${ '00' if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_8": ${ '00' if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_11": ${ ia_40pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_14": ${ ia_40pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_17": ${ ia_40pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_20": ${ ia_40pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_23": ${ ia_25pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_26": ${ ia_40pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_29": ${ ia_40pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_32": ${ ia_25pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_35": ${ ia_25pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_38": ${ '00' if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_41": ${ '00' if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_44": ${ '00' if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_47": ${ '00' if 'Corporate' not in codes['IA'] else '' }
+    # Corporate row
+    - "undefined_3": ${ life_rate if 'Corporate' in codes['IA'] else ''  }
+    - "undefined_6": ${ '00' if 'Corporate' in codes['IA'] else '' }
+    - "undefined_9": ${ '00' if 'Corporate' in codes['IA'] else '' }
+    - "undefined_12": ${ ia_40pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_15": ${ ia_40pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_18": ${ ia_40pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_21": ${ ia_40pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_24": ${ ia_25pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_27": ${ ia_40pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_30": ${ ia_40pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_33": ${ ia_25pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_36": ${ ia_25pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_39": ${ '00' if 'Corporate' in codes['IA'] else '' }
+    - "undefined_42": ${ '00' if 'Corporate' in codes['IA'] else '' }
+    - "undefined_45": ${ '00' if 'Corporate' in codes['IA'] else '' }
+    - "undefined_48": ${ '00' if 'Corporate' in codes['IA'] else '' }
+    
+    - "Date": ${ strip_accents(today_date) }
   valid formats:
     - pdf
 ---
@@ -338,17 +367,41 @@ attachment:
     - "Other2": ${ corporation_name }
     - "Writing_2": ${ codes['IA'].get('Personal', '') }
     - "Other2_2": ${ codes['IA'].get('Corporate', '') }
-    - "undefined_2": ${ life_rate }
-    - "undefined_11": ${ ia_40percent_rate }
-    - "undefined_14": ${ ia_40percent_rate }
-    - "undefined_17": ${ ia_40percent_rate }
-    - "undefined_20": ${ ia_40percent_rate }
-    - "undefined_23": ${ ia_25percent_rate }
-    - "undefined_26": ${ ia_40percent_rate }
-    - "undefined_29": ${ ia_40percent_rate }
-    - "undefined_32": ${ ia_25percent_rate }
-    - "undefined_35": ${ ia_25percent_rate }
-    - "Date": ${ today_date }
+    # Personal row
+    - "undefined_2": ${ life_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_5": ${ '00' if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_8": ${ '00' if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_11": ${ ia_40pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_14": ${ ia_40pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_17": ${ ia_40pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_20": ${ ia_40pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_23": ${ ia_25pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_26": ${ ia_40pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_29": ${ ia_40pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_32": ${ ia_25pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_35": ${ ia_25pct_rate if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_38": ${ '00' if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_41": ${ '00' if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_44": ${ '00' if 'Corporate' not in codes['IA'] else '' }
+    - "undefined_47": ${ '00' if 'Corporate' not in codes['IA'] else '' }
+    # Corporate row
+    - "undefined_3": ${ life_rate if 'Corporate' in codes['IA'] else ''  }
+    - "undefined_6": ${ '00' if 'Corporate' in codes['IA'] else '' }
+    - "undefined_9": ${ '00' if 'Corporate' in codes['IA'] else '' }
+    - "undefined_12": ${ ia_40pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_15": ${ ia_40pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_18": ${ ia_40pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_21": ${ ia_40pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_24": ${ ia_25pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_27": ${ ia_40pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_30": ${ ia_40pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_33": ${ ia_25pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_36": ${ ia_25pct_rate if 'Corporate' in codes['IA'] else '' }
+    - "undefined_39": ${ '00' if 'Corporate' in codes['IA'] else '' }
+    - "undefined_42": ${ '00' if 'Corporate' in codes['IA'] else '' }
+    - "undefined_45": ${ '00' if 'Corporate' in codes['IA'] else '' }
+    - "undefined_48": ${ '00' if 'Corporate' in codes['IA'] else '' }
+    - "Date": ${ strip_accents(today_date) }
   valid formats:
     - pdf
 ---
@@ -504,8 +557,10 @@ attachment:
     - "broker_personal_code": ${ codes['SSQ'].get('Personal', '') }
     - "broker_corporate_code": ${ codes['SSQ'].get('Corporate', '') }
     - "mga_code": ${ ssq_mga_code(broker_branch) }
-    - "life_rate": ${ rounded_life_rate }
-    - "old_life_rate": ${ rounded_old_life_rate }
+    - "pers_life_rate": ${ rounded_life_rate if 'Corporate' not in codes['SSQ'] else '' }
+    - "pers_old_life_rate": ${ rounded_life_rate if 'Corporate' not in codes['SSQ'] else '' }
+    - "corp_life_rate": ${ rounded_life_rate if 'Corporate' in codes['SSQ'] else '' }
+    - "corp_old_life_rate": ${ rounded_life_rate if 'Corporate' in codes['SSQ'] else '' }
     - "mga_rate": ${ 217.5 - rounded_life_rate }
     - "old_mga_rate": ${ 217.5 - rounded_old_life_rate }
     - "date": ${ today_date }
@@ -523,8 +578,10 @@ attachment:
     - "corporation_name": ${ corporation_name }
     - "broker_personal_code": ${ codes['SSQ'].get('Personal', '') }
     - "broker_corporate_code": ${ codes['SSQ'].get('Corporate', '') }
-    - "life_rate": ${ rounded_life_rate }
-    - "old_life_rate": ${ rounded_old_life_rate }
+    - "pers_life_rate": ${ rounded_life_rate if 'Corporate' not in codes['SSQ'] else '' }
+    - "pers_old_life_rate": ${ rounded_life_rate if 'Corporate' not in codes['SSQ'] else '' }
+    - "corp_life_rate": ${ rounded_life_rate if 'Corporate' in codes['SSQ'] else '' }
+    - "corp_old_life_rate": ${ rounded_life_rate if 'Corporate' in codes['SSQ'] else '' }
     - "mga_rate": ${ 217.5 - rounded_life_rate }
     - "old_mga_rate": ${ 217.5 - rounded_old_life_rate }
     - "date": ${ today_date }

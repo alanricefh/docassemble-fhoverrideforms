@@ -45,7 +45,7 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
 setup(name='docassemble.fhoverrideforms',
       version='0.0.1',
       description=('Automating Override Forms for Financial Horizons'),
-      long_description='# Financial Horizons Automation\r\n\r\nPrototype for automating override forms.',
+      long_description='# Docassemble Override Forms\r\n\r\nAutomation script for creating override forms at Financial Horizons.',
       long_description_content_type='text/markdown',
       author='Benjamin Sengupta',
       author_email='benjamin.sengupta@gmail.com',

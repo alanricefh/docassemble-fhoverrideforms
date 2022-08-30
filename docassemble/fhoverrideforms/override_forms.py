@@ -3,6 +3,7 @@ from docassemble.base.util import space_to_underscore, value, define, log, valid
 from collections import defaultdict
 from datetime import date
 from babel.dates import format_date
+import unicodedata
 
 CANADA_LIFE_ANNUITY_MAP = {
     0: 0.00,
@@ -225,26 +226,6 @@ OVERRIDE_CHANGE_TYPE_CARRIER_MAP = {
   ],
 }
 
-OVERRIDE_CARRIERS = [
-  'Assumption',
-  'BMO',
-  'Canada Life',
-  'CPP',
-  'Desjardins',
-  'Empire',
-  'Equitable',
-  'Foresters',
-  'IA',
-  'Ivari',
-  'La Capitale',
-  'Manulife',
-  'RBC',
-  'Specialty Life',
-  'SSQ',
-  'Sun Life',
-  'UV',
-]
-
 WS_CARRIER_NAME_MAP = {
     'Assumption Life / Assomption Vie': 'Assumption',
     'BMO Insurance / BMO Assurance': 'BMO',
@@ -264,6 +245,15 @@ WS_CARRIER_NAME_MAP = {
     'SSQ Life Insurance / SSQ Assurance Vie': 'SSQ',
     'Sun Life / Sun Life': 'Sun Life',
     'UV Insurance/ UV Assurance': 'UV',
+}
+
+# Some carriers ask for codes that appear on WS under a different name
+# For example, La Capitale also asks us to provide Penncorp codes if applicable
+# (La Capitale acquired Penncorp in 2006).
+# The below map ties carrier alises (i.e. Penncorp) to carrier names (i.e. La Capitale)
+# which will later be used to generate La Capitale forms when Penncorp codes are selected
+CARRIER_ALIAS_MAP = {
+  'Penncorp': 'La Capitale'
 }
 
 ACTIVE_STATUSES = ('Active', 'Actif')
@@ -417,6 +407,11 @@ def suppress_none(var: any) -> any:
     return ""
   return var
 
+# Removes all French accents from a string. Useful to fix pdf fields with bad UTF-8 support
+def strip_accents(s: str):
+   return ''.join(c for c in unicodedata.normalize('NFD', s)
+                  if unicodedata.category(c) != 'Mn')
+
 # Parse WS Carrier Table into a list of codes with elements in the form
 # (Carrier, Code, Code_Status)
 def parse_ws_carrier_table(input_string: str) -> List[Tuple[str, str, str, str]]:
@@ -501,11 +496,14 @@ def parse_codes_mcq_answer(codes_answer: Dict[str, bool], codes_list: List[Tuple
   return codes_dict
 
 # Returns all carriers that handled from this form from codes dictionary
-def get_handled_carriers_from_codes(codes: Dict[str, Dict[str, str]]) -> List[str]:
-  return list_intersection(codes.keys(), OVERRIDE_CARRIERS)
+def get_handled_carriers_from_codes(codes_dict: Dict[str, Dict[str, str]]) -> List[str]:
+  carriers = codes_dict.keys()
+  # Converts all carrier aliases to proper carrier names for get_attachment_list to know which
+  # documents to generate
+  carriers = [CARRIER_ALIAS_MAP.get(c, c) for c in carriers]
+  return carriers
 
-# Conserves only carriers that should be notified and replaces spaces with underscores
-# for all carriers in the list
+# Returns a list of corresponding docassemble attachments for a given list of carriers and language
 def get_attachment_list(carriers: List[str], language: str) -> List[str]:
   # Converts spaces to underscores for all carriers names in the list
   attachments = [space_to_underscore(c) + '_' + language for c in carriers]
