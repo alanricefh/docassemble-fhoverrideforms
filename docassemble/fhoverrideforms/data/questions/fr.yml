@@ -1,0 +1,86 @@
+default language: fr
+---
+question: |
+  Voici vos formulaires boni!
+allow downloading: True
+zip filename: "Formulaires Boni ${ broker_name }.zip"
+attachment code: attachment_list
+allow emailing: False
+include attachment notice: False
+include download tab: False
+field: attachment_screen_choice
+buttons:
+  - Envoyer aux assureurs: proceed
+  - Redémarrer: restart
+---
+event: send_emails_event
+question: |
+  Status des emails
+subquestion: |
+  ${ email_sent_status_string }
+css: |
+  <style>
+    .email-success {
+       color: green;
+    }
+    .email-failure {
+       color: red;
+    }
+  </style>
+buttons:
+  - Redémarrer: restart
+---
+question: Renseignements du conseiller
+fields:
+  - Nom du conseiller: broker_name
+  - Corporation: corporation_name
+    required: False
+  - Ancien Taux Assurance Vie: old_life_rate_answer
+    datatype: integer
+    min: 0
+    max: 200
+  - Nouveau Taux Assurance Vie: life_rate_answer
+    datatype: integer
+    min: 0
+    max: 200
+  - Ancien Taux Placement: old_money_rate_f
+    datatype: number
+    min: 0
+    max: 100
+  - Nouveau Taux Placement: money_rate_f
+    datatype: number
+    min: 0
+    max: 100
+  - Départment: broker_branch
+    choices:
+    - Barrie
+    - Burlington
+    - Calgary
+    - Edmonton
+    - Fredericton
+    - Halifax-Dartmouth
+    - Kingston
+    - Kitchener
+    - London
+    - Markham
+    - Moncton
+    - Ottawa
+    - Québec
+    - Richmond
+    - Saskatoon
+    - Sudbury
+    - Toronto
+    - Vancouver
+    - Victoria
+    - Winnipeg
+  - Table d'assureurs: carrier_table
+    input type: area
+    rows: 7
+    validate: validate_ws_carrier_table
+---
+question: "Codes Assureurs"
+fields:
+  - Selectionnez les codes: codes_mcq_answer
+    datatype: multiselect
+    code: codes_mcq_choices
+    rows: 18

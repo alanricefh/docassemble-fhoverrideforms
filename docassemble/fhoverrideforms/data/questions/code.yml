@@ -1,0 +1,85 @@
+modules:
+  - .override_forms
+---
+metadata:
+  title: Override Form Generator
+  short title: Overrides
+  comment: This tool generates override forms.
+---
+initial: True
+code: |
+  set_language(user_language)
+  process_action()
+  if attachment_screen_choice == 'restart':
+    command('restart')
+  elif attachment_screen_choice == 'proceed':
+    send_emails_event
+---
+mandatory: True
+code: |
+  if user_logged_in() and get_user_info()['language'] in ('en', 'fr'):
+    user_language = get_user_info()['language']
+  elif 'lang' in url_args and url_args['lang'] in ('en', 'fr'):
+    user_language = url_args['lang']
+  elif language_from_browser('en', 'fr'):
+    user_language = language_from_browser('en', 'fr')
+  else:
+    user_language = 'en'
+---
+code: |
+  document_language = 'FR' if broker_branch == 'Québec' else 'EN'
+---
+code: |
+  from math import isclose
+  
+  # Some carriers ask for money rates in their form, and some only ask for life
+  # Some carriers round their life rates and others don't
+  # The below code determines which override changes to perform and will be used
+  # later to determine which carriers should be notified
+  ovr_change_type = { 'Life_Rounded': True, 'Life_Any': True, 'Money': True }
+  if life_rate_answer == old_life_rate_answer:
+    ovr_change_type['Life_Any'] = False
+    ovr_change_type['Life_Rounded'] = False
+  elif old_life_rate_answer == round_to_interval(life_rate_answer):
+    ovr_change_type['Life_Rounded'] = False
+  # Since we're comparing floats, we have to use a special function to account for
+  # rounding error
+  if isclose(money_rate_f, old_money_rate_f):
+    ovr_change_type['Money'] = False
+---
+code: |
+  today_date = get_today_date(document_language)
+  today_month = get_today_month(document_language)
+  today_year_suffix = get_today_year_suffix(document_language)
+---
+code: |
+  old_money_rate = int(old_money_rate_f) if is_whole(old_money_rate_f) else old_money_rate_f
+  money_rate = int(money_rate_f) if is_whole(money_rate_f) else money_rate_f
+  ia_25pct_rate = ia_money_product_rates(money_rate)[0]
+  ia_40pct_rate = ia_money_product_rates(money_rate)[1]
+  cl_equity = canada_life_equity(money_rate)
+  
+  # If the user did not enter life_rate, it is assumed that it did not change from old_life_rate
+  old_life_rate = old_life_rate_answer
+  life_rate = life_rate_answer
+  rounded_life_rate = round_to_interval(life_rate)
+  rounded_old_life_rate = round_to_interval(old_life_rate)
+  cl_annuity = canada_life_annuity(life_rate)
+
+---
+code: |
+  codes_list = parse_ws_carrier_table(carrier_table)
+  codes_mcq_choices = get_codes_mcq_variable(codes_list, ovr_change_type)
+---
+code: |
+  codes = parse_codes_mcq_answer(codes_mcq_answer, codes_list)
+  carrier_list = get_handled_carriers_from_codes(codes)
+  attachment_list = get_attachment_list(carrier_list, document_language)
+---
+code: |
+  email_sent_status_string = send_carrier_emails(
+    zip(carrier_list, attachment_list),
+    codes,
+    value('ovr_change_carrier_template' + '_' + document_language),
+    document_language
+  )
