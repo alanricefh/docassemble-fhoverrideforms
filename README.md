@@ -55,6 +55,6 @@ Automation script for creating override forms at Financial Horizons.
 
 Docassemble stores interview answers server-side, and does so by establishing a session with a cookie on the browser. This feature is useful for saving/resuming interviews or even transferring interviews to another device while keeping progress (achieved by transferring the session cookie to the new device).
 Unfortunately, this method of keeping the session tied to a cookie also means that you cannot have more than one concurrent session of an interview at the same time.
-(i.e. you can't fill in two separate interviews in two different browser tabs)
+(i.e. you can't fill in two identical interviews in two different browser tabs, only one session is allowed and the other one is voided)
 
-If this one-interview-at-a-time issue is a bottleneck, a possible solution would be to use an extension such as [Temporary Containers](https://addons.mozilla.org/en-US/firefox/addon/temporary-containers/) (open-source on [GitHub](https://github.com/stoically/temporary-containers)) that isolates docassemble's cookies in it's own tab and voids the cookies when the tab closes, thus providing a separate session cookie for each tab and allowing multiple interviews to be completed at the same time.
+If this one-interview-at-a-time issue is a bottleneck, a possible solution would be to set up an extension such as [Temporary Containers](https://addons.mozilla.org/en-US/firefox/addon/temporary-containers/) for Firefox (open-source on [GitHub](https://github.com/stoically/temporary-containers)) that isolates docassemble's cookies in it's own tab and voids the cookies when the tab closes, thus providing a separate session cookie for each tab and allowing multiple interviews to be completed at the same time.
