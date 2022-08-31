@@ -264,44 +264,47 @@ CODE_TYPE_MAP = {
     'Corporatif': 'Corporate',
 }
 
+DEBUG_EMAIL = True
+DEBUG_EMAIL_ADDRESS = 'benjamin.sengupta@financialhorizons.com'
+
 CARRIER_EMAIL_ADDRESS_MAP = {
   'EN': {
-    'Assumption': 'benjamin.sengupta@financialhorizons.com',
-    'BMO': 'benjamin.sengupta@financialhorizons.com',
-    'Canada Life': 'benjamin.sengupta@financialhorizons.com',
-    'CPP': 'benjamin.sengupta@financialhorizons.com',
-    'Desjardins': 'benjamin.sengupta@financialhorizons.com',
-    'Empire': 'benjamin.sengupta@financialhorizons.com',
-    'Equitable': 'benjamin.sengupta@financialhorizons.com',
-    'Foresters': 'benjamin.sengupta@financialhorizons.com',
-    'IA': 'benjamin.sengupta@financialhorizons.com',
-    'Ivari': 'benjamin.sengupta@financialhorizons.com',
-    'La Capitale': 'benjamin.sengupta@financialhorizons.com',
-    'Manulife': 'benjamin.sengupta@financialhorizons.com',
-    'RBC': 'benjamin.sengupta@financialhorizons.com',
-    'Specialty Life': 'benjamin.sengupta@financialhorizons.com',
-    'SSQ': 'benjamin.sengupta@financialhorizons.com',
-    'Sun Life': 'benjamin.sengupta@financialhorizons.com',
-    'UV': 'benjamin.sengupta@financialhorizons.com',
+    'Assumption':     'contrats@assomption.ca',
+    'BMO':            'insurance.agencyservices@bmo.com',
+    'Canada Life':    'CanadaLife.Contracts&Licensing@canadalife.com',
+    'CPP':            'contracting@cpp.ca',
+    'Desjardins':     'contracting_and_financial_operations@desjardins.com',
+    'Empire':         'contracting@empire.ca',
+    'Equitable':      'fieldpayroll@equitable.ca',
+    'Foresters':      'info@foresters.com',
+    'IA':             'iat-compensation@ia.ca',
+    'Ivari':          'distributioncompensation@ivari.ca',
+    'La Capitale':    'contrat.remuneration@lacapitale.com',
+    'Manulife':       'Comp_mfc@manulife.ca',
+    'RBC':            'inslccs@rbc.com',
+    'Specialty Life': 'Contracting@slinsurance.ca',
+    'SSQ':            'compensation@ssq.ca',
+    'Sun Life':       'REMUN@sunlife.com',
+    'UV':             'ind.remuneration@uvinsurance.ca',
   },
   'FR': {
-    'Assumption': 'benjamin.sengupta@financialhorizons.com',
-    'BMO': 'benjamin.sengupta@financialhorizons.com',
-    'Canada Life': 'benjamin.sengupta@financialhorizons.com',
-    'CPP': 'benjamin.sengupta@financialhorizons.com',
-    'Desjardins': 'benjamin.sengupta@financialhorizons.com',
-    'Empire': 'benjamin.sengupta@financialhorizons.com',
-    'Equitable': 'benjamin.sengupta@financialhorizons.com',
-    'Foresters': 'benjamin.sengupta@financialhorizons.com',
-    'IA': 'benjamin.sengupta@financialhorizons.com',
-    'Ivari': 'benjamin.sengupta@financialhorizons.com',
-    'La Capitale': 'benjamin.sengupta@financialhorizons.com',
-    'Manulife': 'benjamin.sengupta@financialhorizons.com',
-    'RBC': 'benjamin.sengupta@financialhorizons.com',
-    'Specialty Life': 'benjamin.sengupta@financialhorizons.com',
-    'SSQ': 'benjamin.sengupta@financialhorizons.com',
-    'Sun Life': 'benjamin.sengupta@financialhorizons.com',
-    'UV': 'benjamin.sengupta@financialhorizons.com',
+    'Assumption':     'contrats@assomption.ca',
+    'BMO':            'insurance.agencyservices@bmo.com',
+    'Canada Life':    'CanadaLife.Contracts&Licensing@canadalife.com',
+    'CPP':            'misesouscontrat@ppcqc.ca',
+    'Desjardins':     'contracting_and_financial_operations@desjardins.com',
+    'Empire':         'contracting@empire.ca',
+    'Equitable':      'fieldpayroll@equitable.ca',
+    'Foresters':      'info@foresters.com',
+    'IA':             'iat-compensation@ia.ca',
+    'Ivari':          'distributioncompensation@ivari.ca',
+    'La Capitale':    'contrat.remuneration@lacapitale.com',
+    'Manulife':       'Comp_mfc@manulife.ca',
+    'RBC':            'inslccs@rbc.com',
+    'Specialty Life': 'Contracting@slinsurance.ca',
+    'SSQ':            'compensation@ssq.ca',
+    'Sun Life':       'REMUN@sunlife.com',
+    'UV':             'ind.remuneration@uvassurance.ca',
   },
 }
 
@@ -517,7 +520,10 @@ def send_carrier_emails(carriers_and_attachments: List[Tuple[str, DAFile]], code
   email_statuses = []
   for carrier, attachment in carriers_and_attachments:
     carrier_email_name = carrier
-    carrier_email_address = CARRIER_EMAIL_ADDRESS_MAP[language][carrier]
+    if DEBUG_EMAIL:
+      carrier_email_address = DEBUG_EMAIL_ADDRESS
+    else:
+      carrier_email_address = CARRIER_EMAIL_ADDRESS_MAP[language][carrier]
     # Concatinate all codes
     all_codes = [codes[carrier].get('Personal', ''), codes[carrier].get('Corporate', '')]
     carrier_email_code = ' '.join(all_codes)
