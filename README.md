@@ -31,7 +31,7 @@ Automation script for creating override forms at Financial Horizons.
 - The interview should now be accessible at https://YOUR_DOCASSEMBLE_URL/fhoverrideforms/interview
   - For more user-friendly URLS, see the [`dispatch` directive](https://docassemble.org/docs/config.html#dispatch) (the interview name is `docassemble.fhoverrideforms:data/questions/interview.yml`)
 - Emails will not send to carriers until the `DEBUG_EMAIL = True` line is set to `DEBUG_EMAIL = False` in `override_forms.py`. To do this, you can make changes via GitHub in your browser or set up the playground (see below instructions) and edit the file in the 'Modules' section
-- Set up the `send_email` function in `override_forms.py` with the correct  `sender`, `cc`, and `reply_to` parameters (see (`send_email`)[https://docassemble.org/docs/functions.html#send_email])
+- Set up the `send_email` function in `override_forms.py` with the correct  `sender`, `cc`, and `reply_to` parameters (see [`send_email`](https://docassemble.org/docs/functions.html#send_email))
 
 ## Development setup instructions
 
