@@ -43,12 +43,12 @@ fields:
     datatype: integer
     min: 0
     max: 200
-  - Ancien Taux Placement: old_money_rate_f
-    datatype: number
+  - Ancien Taux Placement: old_money_rate
+    datatype: integer
     min: 0
     max: 100
-  - Nouveau Taux Placement: money_rate_f
-    datatype: number
+  - Nouveau Taux Placement: money_rate
+    datatype: integer
     min: 0
     max: 100
   - Départment: broker_branch

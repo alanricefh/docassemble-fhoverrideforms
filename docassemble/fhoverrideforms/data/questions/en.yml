@@ -43,12 +43,12 @@ fields:
     datatype: integer
     min: 0
     max: 200
-  - Old Money Rate: old_money_rate_f
-    datatype: number
+  - Old Money Rate: old_money_rate
+    datatype: integer
     min: 0
     max: 100
-  - New Money Rate: money_rate_f
-    datatype: number
+  - New Money Rate: money_rate
+    datatype: integer
     min: 0
     max: 100
   - Broker Branch: broker_branch

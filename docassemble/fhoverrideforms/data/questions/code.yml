@@ -30,8 +30,6 @@ code: |
   document_language = 'FR' if broker_branch == 'Québec' else 'EN'
 ---
 code: |
-  from math import isclose
-  
   # Some carriers ask for money rates in their form, and some only ask for life
   # Some carriers round their life rates and others don't
   # The below code determines which override changes to perform and will be used
@@ -42,9 +40,7 @@ code: |
     ovr_change_type['Life_Rounded'] = False
   elif old_life_rate_answer == round_to_interval(life_rate_answer):
     ovr_change_type['Life_Rounded'] = False
-  # Since we're comparing floats, we have to use a special function to account for
-  # rounding error
-  if isclose(money_rate_f, old_money_rate_f):
+  if money_rate == old_money_rate:
     ovr_change_type['Money'] = False
 ---
 code: |
@@ -53,8 +49,6 @@ code: |
   today_year_suffix = get_today_year_suffix(document_language)
 ---
 code: |
-  old_money_rate = int(old_money_rate_f) if is_whole(old_money_rate_f) else old_money_rate_f
-  money_rate = int(money_rate_f) if is_whole(money_rate_f) else money_rate_f
   ia_25pct_rate = ia_money_product_rates(money_rate)[0]
   ia_40pct_rate = ia_money_product_rates(money_rate)[1]
   cl_equity = canada_life_equity(money_rate)
